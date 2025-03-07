@@ -33,7 +33,14 @@ Two-phase commitdms 4단계로 이뤄집니다.
 - preCommit : 체크포인트가 도착하면 file을 flush, close하고 write하지는 않습니다. JobManager는 모든 sink 연산자들이 preCommit단계를 통과해야 체크포인트를 커밋할 수 있습니다.
 - commit : preCommit이 완료된 경우 temp dir에서 actual dir로 이동시킵니다.  
 - abort : 체크포인트가 실패하거나 장애가 발생하는 경우 temp dir을 삭제하거나 DB 트랜잭션을 중단합니다.
-
+  
+작업 단계를 요약해보면 바로 외부에 저장하는 것이 아닌 임시 저장소에 저장 후 이상이 없는 경우 DB에 테이블을 저장합니다.  
+  
+### 정리
+- Flink는 Exactly-once(정확히 1번 처리)를 지원한다
+- Exactly-once를 보장하기 위해서는 Checkpoint가 중요하다.
+- 에러가 발생하는 경우 성공한 마지막 Checkpoint(스냅샷)으로 이동하여 복구한다.
+- 소스에서 이벤트를 받을 때 오프셋 같은 Unique ID를 통해
 
 ### Ref:
 - https://medium.com/codex/how-we-almost-achieve-end-to-end-exactly-once-processing-with-flink-28d2c013b5c1
