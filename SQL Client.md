@@ -52,7 +52,7 @@ curl http://localhost:8083/v1/info
 2. 세션 생성
 사용자 식별을 위한 세션 생성
 ```
-$ curl --request POST http://localhost:8083/v1/sessions
+curl --request POST http://localhost:8083/v1/sessions
 ```  
 반환된 세션 값을 재사용해야 됩니다.
 ```
